@@ -1,9 +1,9 @@
 # toDoPizdato
 Face It chrome extention
-###use
+###How to use extention?
 - chrome
 - settings
-- etentions
+- extentions
 - check developer mode
 - click on: "Download unpakege extention"
 - set pas to folder "toDoPizdato"
