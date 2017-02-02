@@ -29,45 +29,49 @@ function onWindowLoad() {
         header = header.replace(new RegExp("Test",'g'),"");
         header = header.trim();
 
-        ////req json object pizdato
-        var req = {test: header, question: '', multiselect: '', answers: []}
+        if(header != '') {
+          ////req json object pizdato
+          var req = {test: header, question: '', multiselect: '', answers: []}
 
-        ///get question pizdato
-        $('#message').text(header);
-        var found = $("<p></p>");
-        $(found).append($(my_var).find("#questionForm pre p").text());
-        $('#message').append(found);
-        req.question = $(my_var).find("#questionForm pre p").text();
+          ///get question pizdato
+          $('#message').text(header);
+          var found = $("<p></p>");
+          $(found).append($(my_var).find("#questionForm pre p").text());
+          $('#message').append(found);
+          req.question = $(my_var).find("#questionForm pre p").text();
 
-        //get multiselect pizdato
-        found = $("<p></p>");
-        $(found).append($(my_var).find("#questionForm p.oGood").text());
-        $('#message').append(found);
-        req.multiselect = $(my_var).find("#questionForm p.oGood").text();
+          //get multiselect pizdato
+          found = $("<p></p>");
+          $(found).append($(my_var).find("#questionForm p.oGood").text());
+          $('#message').append(found);
+          req.multiselect = $(my_var).find("#questionForm p.oGood").text();
 
-        found = $("<p></p>");
-        //arr answers
-        var arr = [];
-        var ans = $(my_var).find("pre.np").each(function (k, v) {
-          ///fill arr pizdato
-          arr.push($(v).text());
-        });
-        req.answers = arr;
-        $(found).append(ans);
-        $('#message').append(found);
+          found = $("<p></p>");
+          //arr answers
+          var arr = [];
+          var ans = $(my_var).find("pre.np").each(function (k, v) {
+            ///fill arr pizdato
+            arr.push($(v).text());
+          });
+          req.answers = arr;
+          $(found).append(ans);
+          $('#message').append(found);
 
-        console.log(req);
+          console.log(req);
 
-        //send post json data to server pizdato
-        $.post( "http://192.168.0.145:5000/api/v2/json", req )
-        .done(function() {
-          console.log(200);
-          alert( "success" );
-        })
-        .fail(function() {
-          console.log(404);
-          alert( "error. Server not found" );
-        });
+          //send post json data to server pizdato
+          $.post( "http://192.168.0.145:5000/api/v2/json", req )
+          .done(function() {
+            console.log(200);
+            alert( "success" );
+          })
+          .fail(function() {
+            console.log(404);
+            alert( "error. Server not found" );
+          });
+        } else {
+          alert("this page is not valid");
+        }
 
     });
   });
