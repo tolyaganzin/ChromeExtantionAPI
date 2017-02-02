@@ -60,7 +60,7 @@ function onWindowLoad() {
         })
         .fail(function() {
           console.log(404);
-          alert( "error" );
+          alert( "error. Server not found" );
         });
 
     });
