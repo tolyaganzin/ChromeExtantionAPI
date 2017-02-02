@@ -30,7 +30,7 @@ function onWindowLoad() {
         header = header.trim();
 
         ////req json object pizdato
-        var req = {test: header, question: '', answers: []}
+        var req = {test: header, question: '', multiselect: '', answers: []}
 
         ///get question pizdato
         $('#message').text(header);
@@ -38,6 +38,12 @@ function onWindowLoad() {
         $(found).append($(my_var).find("#questionForm pre p").text());
         $('#message').append(found);
         req.question = $(my_var).find("#questionForm pre p").text();
+
+        //get multiselect pizdato
+        found = $("<p></p>");
+        $(found).append($(my_var).find("#questionForm p.oGood").text());
+        $('#message').append(found);
+        req.multiselect = $(my_var).find("#questionForm p.oGood").text();
 
         found = $("<p></p>");
         //arr answers
