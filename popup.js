@@ -29,22 +29,31 @@ function onWindowLoad() {
         header = header.replace(new RegExp("Test",'g'),"");
         header = header.trim();
 
-        if(header != '') {
+        if(header != '' && $(my_var).find("#questionForm pre").first().text() != '') {
           ////req json object pizdato
-          var req = {test: header, question: '', multiselect: '', answers: []}
+          var req = {
+              test: header,
+              questionData: {
+                question: "",
+                multiselect: "",
+                answers: []
+              }
+          };
 
           ///get question pizdato
           $('#message').text(header);
           var found = $("<p></p>");
-          $(found).append($(my_var).find("#questionForm pre p").text());
+          $(found).append($(my_var).find("#questionForm pre").first());
           $('#message').append(found);
-          req.question = $(my_var).find("#questionForm pre p").text();
+          req.questionData.question = $(my_var).find("#questionForm pre").first().text();
 
           //get multiselect pizdato
           found = $("<p></p>");
-          $(found).append($(my_var).find("#questionForm p.oGood").text());
+          $(found).append($(my_var).find("#questionForm p.oGood"));
           $('#message').append(found);
-          req.multiselect = $(my_var).find("#questionForm p.oGood").text();
+          req.questionData.multiselect = $(my_var).find("#questionForm p.oGood").text();
+
+
 
           found = $("<p></p>");
           //arr answers
@@ -53,22 +62,33 @@ function onWindowLoad() {
             ///fill arr pizdato
             arr.push($(v).text());
           });
-          req.answers = arr;
+          req.questionData.answers = arr;
           $(found).append(ans);
           $('#message').append(found);
 
+          req = JSON.stringify(req);
           console.log(req);
 
-          //send post json data to server pizdato
-          $.post( "http://192.168.0.145:5000/api/v2/json", req )
-          .done(function() {
-            console.log(200);
-            alert( "success" );
+          $.ajax({
+             type: "POST",
+             //the url where you want to sent the userName and password to
+            //  url: 'http://192.168.0.145:5000/api/v2/json',
+             url: 'http://192.168.0.128:5000/api/v2/json',
+             data: req,
+             success: function (data, textStatus, jqXHR) {
+               console.log(textStatus);
+               alert(textStatus);
+             },
+             error: function (jqXHR, textStatus, errorThrown) {
+               console.log(textStatus);
+               alert(textStatus);
+             },
+             contentType: "application/json",
+             dataType: 'json',
+             async: false
+             //json object to sent to the authentication url
           })
-          .fail(function() {
-            console.log(404);
-            alert( "error. Server not found" );
-          });
+
         } else {
           alert("this page is not valid");
         }
