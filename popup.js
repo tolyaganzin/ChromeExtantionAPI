@@ -1,36 +1,20 @@
 function onWindowLoad() {
-  ///////set pizdato
-  // var test = '';
-  /////get pizdato test
-  // chrome.storage.local.get(["selectedTest"], function(items){
-  //   if (items.selectedTest) {
-  //     test = items.selectedTest;
-  //     $("#setPizdato").val(test)
-  //     console.log(items);
-  //   }
-  // });
-  /////select and set pizdato test
-  // $("#setPizdato").change(function(){
-  //   console.log('old test: ' + test);
-  //   test = $(this).val();
-  //   console.log('Selected test: ' + test);
-  //   chrome.storage.local.set({ "selectedTest": test }, function(){});
-  // });
-  ///////////////////////////////////
 
   var message = document.querySelector('#message');
 
   chrome.tabs.getSelected(null,function(tab) {
 
+    ////auto get test pizdato
     $.get(tab.url, function( my_var ) {
-        ////auto get test pizdato
-        var header = $(my_var).find("h1.np").text();
 
+        //get header
+        var header = $(my_var).find("h1.np").text();
         header = header.replace(new RegExp("Test",'g'),"");
         header = header.trim();
 
         if(header != '' && $(my_var).find("#questionForm pre").first().text() != '') {
-          ////req json object pizdato
+
+          //req json object pizdato
           var req = {
               test: header,
               questionData: {
@@ -40,46 +24,53 @@ function onWindowLoad() {
               }
           };
 
-          ///get question pizdato
-          $('#message').text(header);
-          var found = $("<p></p>");
-          $(found).append($(my_var).find("#questionForm pre").first());
+          //set header
+          $('#message').text('');
+          $('#message').append( $("<h1></h1>").text(header + " Test") );
+
+          //get question pizdato
+          var found = $("<pre></pre>");
+          $(found).append($(my_var).find("#questionForm pre").first().text());
           $('#message').append(found);
           req.questionData.question = $(my_var).find("#questionForm pre").first().text();
 
           //get multiselect pizdato
-          found = $("<p></p>");
-          $(found).append($(my_var).find("#questionForm p.oGood"));
-          $('#message').append(found);
+          $('#message').append($(my_var).find("#questionForm p.oGood"));
           req.questionData.multiselect = $(my_var).find("#questionForm p.oGood").text();
 
-
-
-          found = $("<p></p>");
           //arr answers
           var arr = [];
+          var pres = []
           var ans = $(my_var).find("pre.np").each(function (k, v) {
             ///fill arr pizdato
+            pres.push($(v))
             arr.push($(v).text());
           });
-          req.questionData.answers = arr;
-          $(found).append(ans);
-          $('#message').append(found);
 
+          //append answers
+          req.questionData.answers = arr;
+          $('#message').append(pres);
+
+          //convert to JSON
           req = JSON.stringify(req);
           console.log(req);
 
+          //send to server data
           $.ajax({
              type: "POST",
              //the url where you want to sent the userName and password to
-            //  url: 'http://192.168.0.145:5000/api/v2/json',
+             //url: 'http://192.168.0.145:5000/api/v2/json',
              url: 'http://192.168.0.128:5000/api/v2/json',
              data: req,
              success: function (data, textStatus, jqXHR) {
+               //response from server success
+               $('#message').text('');
+               $('#message').append($("<img/>").attr("src","http://192.168.0.145:5000/static/screenshots/1480409001-3d82ca690c0e82e6c52df2d803c313b2.jpg"));
                console.log(textStatus);
                alert(textStatus);
              },
              error: function (jqXHR, textStatus, errorThrown) {
+               //response from server error
                console.log(textStatus);
                alert(textStatus);
              },
@@ -90,6 +81,7 @@ function onWindowLoad() {
           })
 
         } else {
+          //if not valid page
           alert("this page is not valid");
         }
 
