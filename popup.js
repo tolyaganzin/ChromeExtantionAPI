@@ -66,13 +66,11 @@ function onWindowLoad() {
                //response from server success
                $('#message').text('');
                $('#message').append($("<img/>").attr("src","http://192.168.0.145:5000/static/screenshots/1480409001-3d82ca690c0e82e6c52df2d803c313b2.jpg"));
-               console.log(textStatus);
-               alert(textStatus);
+               console.log(textStatus);               
              },
              error: function (jqXHR, textStatus, errorThrown) {
                //response from server error
-               console.log(textStatus);
-               alert(textStatus);
+               console.log(textStatus);               
              },
              contentType: "application/json",
              dataType: 'json',
