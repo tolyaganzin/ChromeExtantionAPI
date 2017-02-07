@@ -64,13 +64,16 @@ function onWindowLoad() {
              data: req,
              success: function (data, textStatus, jqXHR) {
                //response from server success
-               $('#message').text('');
-               $('#message').append($("<img/>").attr("src","http://192.168.0.145:5000/static/screenshots/1480409001-3d82ca690c0e82e6c52df2d803c313b2.jpg"));
-               console.log(textStatus);               
+               if(data.img) {                 
+                 $('#message').text('');
+                 $('#message').append($("<img/>").attr("src", data.img));
+                 console.log(textStatus);
+                 console.log(data);
+               }
              },
              error: function (jqXHR, textStatus, errorThrown) {
                //response from server error
-               console.log(textStatus);               
+               console.log(textStatus);
              },
              contentType: "application/json",
              dataType: 'json',
