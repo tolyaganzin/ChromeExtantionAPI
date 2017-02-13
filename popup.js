@@ -12,6 +12,23 @@ function onWindowLoad() {
         header = header.replace(new RegExp("Test",'g'),"");
         header = header.trim();
 
+        // styles Success/Error
+        var stylesSuccess = {
+          "border": "5px",
+          "border-color": "#009406",
+          "border-style": "solid",
+          "border-radius": "7px",
+          "padding": "10px"
+        };
+        var stylesError = {
+          "border": "5px",
+          "border-color": "red",
+          "border-style": "solid",
+          "border-radius": "7px",
+          "padding": "10px",
+          "color": "red"
+        };
+
         if(header != '' && $(my_var).find("#questionForm pre").first().text() != '') {
 
           //req json object pizdato
@@ -23,7 +40,6 @@ function onWindowLoad() {
                 answers: []
               }
           };
-
           //set header
           $('#message').text('');
           $('#message').append( $("<h1></h1>").text(header + " Test") );
@@ -55,11 +71,14 @@ function onWindowLoad() {
           req = JSON.stringify(req);
           console.log(req);
 
+
+
           //send to server data
           $.ajax({
              type: "POST",
              //the url where you want to sent the userName and password to
-             url: 'http://192.168.0.118:4000/api/v2/json',
+            //  url: 'http://192.168.0.118:4000/api/v2/json',
+             url: 'http://192.168.0.145:5000/api/v2/testing',
              data: req,
              success: function (data, textStatus, jqXHR) {
                //response from server success
@@ -70,47 +89,23 @@ function onWindowLoad() {
                  console.log(data);
                } else if (data.version == "new") {
                  if (data.answers.length == 0) {
+                   $('#message').append($("<pre></pre>").text(req.questionData.question));
                    $('#message').append($("<h1></h1>").text("go to: http://stackoverflow.com"));
                  } else {
-                   var styles = {
-                     "border": "5px",
-                     "border-color": "#009406",
-                     "border-style": "solid",
-                     "border-radius": "7px",
-                     "padding": "10px",
-                     "color": "red"
-                   };
                    for (var i = 0; i < data.answers.length; i++) {
-                     $('#message').append($("<pre></pre>").css(styles).text(data.answers[i]));
+                     $('#message').append($("<pre></pre>").css(stylesSuccess).text(data.answers[i]));
                    }
                  }
                  console.log(textStatus);
                  console.log(data);
                } else {
-
-                 var styles = {
-                   "border": "5px",
-                   "border-color": "red",
-                   "border-style": "solid",
-                   "border-radius": "7px",
-                   "padding": "10px",
-                   "color": "red"
-                 };
-                 $('#message').append($("<pre></pre>").css(styles).text('invalid data'));
+                 $('#message').append($("<pre></pre>").css(stylesError).text('Invalid data'));
                }
              },
              error: function (jqXHR, textStatus, errorThrown) {
                //response from server error
-               var styles = {
-                 "border": "5px",
-                 "border-color": "red",
-                 "border-style": "solid",
-                 "border-radius": "7px",
-                 "padding": "10px",
-                 "color": "red"
-               };
                $('#message').text('');
-               $('#message').append($("<pre></pre>").css(styles).text('no server connection'));
+               $('#message').append($("<pre></pre>").css(stylesError).text('Has not server connection'));
                console.log(textStatus);
              },
              contentType: "application/json",
@@ -120,16 +115,8 @@ function onWindowLoad() {
 
         } else {
           //if not valid page
-          var styles = {
-            "border": "5px",
-            "border-color": "red",
-            "border-style": "solid",
-            "border-radius": "7px",
-            "padding": "10px",
-            "color": "red"
-          };
           $('#message').text('');
-          $('#message').append($("<pre></pre>").css(styles).text('invalid page'));
+          $('#message').append($("<pre></pre>").css(stylesError).text('Invalid page'));
         }
 
     });
