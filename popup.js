@@ -93,7 +93,7 @@ function onWindowLoad() {
                    $('#message').append($("<h4></h4>").css({"color": "dodgerblue"}).text("go to: http://stackoverflow.com http://google.com"));
                  } else {
                    for (var i = 0; i < data.answers.length; i++) {
-                     $('#message').append($("<pre></pre>").css(stylesSuccess).text(data.answers[i]));
+                     $('#message').append($("<pre></pre>").css(stylesSuccess).text(data.answers[i].text));
                    }
                  }
                  console.log(textStatus);
