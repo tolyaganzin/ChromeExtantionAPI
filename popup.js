@@ -67,11 +67,10 @@ function onWindowLoad() {
           req.questionData.answers = arr;
           $('#message').append(pres);
 
+          var saveQuestion = req.questionData.question;
           //convert to JSON
           req = JSON.stringify(req);
           console.log(req);
-
-
 
           //send to server data
           $.ajax({
@@ -89,8 +88,9 @@ function onWindowLoad() {
                  console.log(data);
                } else if (data.version == "new") {
                  if (data.answers.length == 0) {
-                   $('#message').append($("<pre></pre>").text(req.questionData.question));
-                   $('#message').append($("<h1></h1>").text("go to: http://stackoverflow.com"));
+                   $('#message').append($("<h2></h2>").css({"color": "red"}).text("Has not this question in db!!!!"));
+                   $('#message').append($("<h3></h3>").append($("<pre></pre>").text(saveQuestion)));
+                   $('#message').append($("<h4></h4>").css({"color": "dodgerblue"}).text("go to: http://stackoverflow.com http://google.com"));
                  } else {
                    for (var i = 0; i < data.answers.length; i++) {
                      $('#message').append($("<pre></pre>").css(stylesSuccess).text(data.answers[i]));
