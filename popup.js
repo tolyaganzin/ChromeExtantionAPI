@@ -4,7 +4,7 @@ function onWindowLoad() {
 
   chrome.tabs.getSelected(null,function(tab) {
 
-    ////auto get test pizdato
+    ////auto get test
     $.get(tab.url, function( my_var ) {
 
       // hide p#start element
