@@ -7,8 +7,9 @@ function onWindowLoad() {
     ////auto get test pizdato
     $.get(tab.url, function( my_var ) {
 
+      // hide p#start element
       $('#start').addClass('hide');
-      $('#container').removeClass('hide')
+
       //get header
       var header = $(my_var).find("h1.np").text();
       header = header.replace(new RegExp("Test",'g'),"");
@@ -29,6 +30,7 @@ function onWindowLoad() {
 
         //get question
         req.questionData.question = $(my_var).find("#questionForm pre").first().text();
+        // set to html text question
         $("#question").text(req.questionData.question);
         //get multiselect
         req.questionData.multiselect = $(my_var).find("#questionForm p.oGood").text();
@@ -56,15 +58,17 @@ function onWindowLoad() {
             console.log(textStatus);
             console.log(data);
             if(data.version == "old") {
+              // Old answer image
               $('img.hide').attr("src", data.image);
               $('img.hide').removeClass('hide');
             } else if (data.version == "new") {
               if (data.answers.length == 0) {
+                // Has not answer(s)
                 $('h2.hide').removeClass('hide');
                 $('h3.hide').removeClass('hide');
                 $('h4.hide').removeClass('hide');
               } else {
-
+                // Right Answer(s)
                 $.each( data.answers, function( key, value ) {
                   var preElement = $('pre.hide').clone();
                   $(preElement).removeClass("hide");
@@ -74,10 +78,12 @@ function onWindowLoad() {
                 });
               }
             } else {
+              // Invalid data
               $('#start').removeClass("hide").addClass("error").text('Invalid data');
             }
           },
           error: function (jqXHR, textStatus, errorThrown) {
+            // Has not server connection
             $('#start').removeClass("hide").addClass("error").text('Has not server connection');
             console.log(textStatus);
           },
