@@ -1,0 +1,29 @@
+body {
+  min-width: 500px;
+}
+.rightAnswer {
+  border: 5px;
+  border-color: #009406;
+  border-style: solid;
+  border-radius: 7px;
+  padding: 10px;
+}
+.error {
+  border: 5px;
+  border-color: red;
+  border-style: solid;
+  border-radius: 7px;
+  padding: 10px;
+  color: red;
+}
+.info {
+  border: 5px;
+  border-color: dodgerblue;
+  border-style: solid;
+  border-radius: 7px;
+  padding: 10px;
+  color: dodgerblue;
+}
+.hide {
+  display: none !important;
+}

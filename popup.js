@@ -7,121 +7,92 @@ function onWindowLoad() {
     ////auto get test pizdato
     $.get(tab.url, function( my_var ) {
 
-        //get header
-        var header = $(my_var).find("h1.np").text();
-        header = header.replace(new RegExp("Test",'g'),"");
-        header = header.trim();
-
-        // styles Success/Error
-        var stylesSuccess = {
-          "border": "5px",
-          "border-color": "#009406",
-          "border-style": "solid",
-          "border-radius": "7px",
-          "padding": "10px"
-        };
-        var stylesError = {
-          "border": "5px",
-          "border-color": "red",
-          "border-style": "solid",
-          "border-radius": "7px",
-          "padding": "10px",
-          "color": "red"
-        };
-
-        if(header != '' && $(my_var).find("#questionForm pre").first().text() != '') {
-
-          //req json object pizdato
-          var req = {
-              test: header,
-              questionData: {
-                question: "",
-                multiselect: "",
-                answers: []
-              }
-          };
-          //set header
-          $('#message').text('');
-          $('#message').append( $("<h1></h1>").text(header + " Test") );
-
-          //get question pizdato
-          var found = $("<pre></pre>");
-          $(found).append($(my_var).find("#questionForm pre").first().text());
-          $('#message').append(found);
-          req.questionData.question = $(my_var).find("#questionForm pre").first().text();
-
-          //get multiselect pizdato
-          $('#message').append($(my_var).find("#questionForm p.oGood"));
-          req.questionData.multiselect = $(my_var).find("#questionForm p.oGood").text();
-
-          //arr answers
-          var arr = [];
-          var pres = []
-          var ans = $(my_var).find("pre.np").each(function (k, v) {
-            ///fill arr pizdato
-            pres.push($(v))
-            arr.push($(v).text());
-          });
-
-          //append answers
-          req.questionData.answers = arr;
-          $('#message').append(pres);
-
-          var saveQuestion = req.questionData.question;
-          //convert to JSON
-          req = JSON.stringify(req);
-          console.log(req);
-
-          //send to server data
-          $.ajax({
-             type: "POST",
-             //the url where you want to sent the userName and password to
-            //  url: 'http://192.168.0.118:4000/api/v2/json',
-             url: 'http://192.168.0.145:5000/api/v2/testing',
-             data: req,
-             success: function (data, textStatus, jqXHR) {
-               //response from server success
-               $('#message').text('');
-               if(data.version == "old") {
-                 $('#message').append($("<img/>").attr("src", data.image));
-                 console.log(textStatus);
-                 console.log(data);
-               } else if (data.version == "new") {
-                 if (data.answers.length == 0) {
-                   $('#message').append($("<h2></h2>").css({"color": "red"}).text("Has not this question in db!!!!"));
-                   $('#message').append($("<h3></h3>").append($("<pre></pre>").text(saveQuestion)));
-                   $('#message').append($("<h4></h4>").css({"color": "dodgerblue"}).text("go to: http://stackoverflow.com http://google.com"));
-                 } else {
-                   for (var i = 0; i < data.answers.length; i++) {
-                     $('#message').append($("<pre></pre>").css(stylesSuccess).text(data.answers[i].text));
-                   }
-                 }
-                 console.log(textStatus);
-                 console.log(data);
-               } else {
-                 $('#message').append($("<pre></pre>").css(stylesError).text('Invalid data'));
-               }
-             },
-             error: function (jqXHR, textStatus, errorThrown) {
-               //response from server error
-               $('#message').text('');
-               $('#message').append($("<pre></pre>").css(stylesError).text('Has not server connection'));
-               console.log(textStatus);
-             },
-             contentType: "application/json",
-             dataType: 'json',
-             async: false
-          })
-
-        } else {
-          //if not valid page
-          $('#message').text('');
-          $('#message').append($("<pre></pre>").css(stylesError).text('Invalid page'));
+      $('#start').addClass('hide');
+      $('#container').removeClass('hide')
+      //get header
+      var header = $(my_var).find("h1.np").text();
+      header = header.replace(new RegExp("Test",'g'),"");
+      header = header.trim();
+      //arr answers
+      var arr = [];
+      //req json object
+      var req = {
+        test: header,
+        questionData: {
+          question: "",
+          multiselect: "",
+          answers: []
         }
+      };
+
+      if(header != '' && $(my_var).find("#questionForm pre").first().text() != '') {
+
+        //get question
+        req.questionData.question = $(my_var).find("#questionForm pre").first().text();
+        $("#question").text(req.questionData.question);
+        //get multiselect
+        req.questionData.multiselect = $(my_var).find("#questionForm p.oGood").text();
+        $(my_var).find("pre.np").each(function (key, value) {
+          ///fill arr
+          arr.push($(value).text());
+        });
+        //append answers
+        req.questionData.answers = arr;
+
+        //convert to JSON
+        req = JSON.stringify(req);
+        console.log(req);
+
+        //send to server data
+        $.ajax({
+
+          type: "POST",
+          //the url where you want to sent the userName and password to
+          //  url: 'http://192.168.0.118:4000/api/v2/json',
+          url: 'http://192.168.0.145:5000/api/v2/testing',
+          data: req,
+          success: function (data, textStatus, jqXHR) {
+            //response from server success
+            console.log(textStatus);
+            console.log(data);
+            if(data.version == "old") {
+              $('img.hide').attr("src", data.image);
+              $('img.hide').removeClass('hide');
+            } else if (data.version == "new") {
+              if (data.answers.length == 0) {
+                $('h2.hide').removeClass('hide');
+                $('h3.hide').removeClass('hide');
+                $('h4.hide').removeClass('hide');
+              } else {
+
+                $.each( data.answers, function( key, value ) {
+                  var preElement = $('pre.hide').clone();
+                  $(preElement).removeClass("hide");
+                  $(preElement).addClass("rightAnswer");
+                  $(preElement).text(value.text);
+                  $('#container').append($(preElement));
+                });
+              }
+            } else {
+              $('#start').removeClass("hide").addClass("error").text('Invalid data');
+            }
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            $('#start').removeClass("hide").addClass("error").text('Has not server connection');
+            console.log(textStatus);
+          },
+          contentType: "application/json",
+          dataType: 'json',
+          async: false
+        });
+
+      } else {
+        //if not valid page
+        $('#start').removeClass("hide").addClass("error").text('Invalid page');
+      }
 
     });
   });
-
 
 }
 
