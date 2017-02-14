@@ -64,7 +64,7 @@ function onWindowLoad() {
             } else if (data.version == "new") {
               if (data.answers.length == 0) {
                 // Has not answer(s)
-                $('h2.hide, h3.hide, h4.hide').removeClass('hide');  
+                $('h2.hide, h4.hide, #question').removeClass('hide');  
               } else {
                 // Right Answer(s)
                 $.each( data.answers, function( key, value ) {
