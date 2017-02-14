@@ -5,13 +5,13 @@ function onWindowLoad() {
   chrome.tabs.getSelected(null,function(tab) {
 
     ////auto get test
-    $.get(tab.url, function( my_var ) {
+    $.get(tab.url, function( htmlCurrentPage ) {
 
       // hide p#start element
       $('#start').addClass('hide');
 
       //get header
-      var header = $(my_var).find("h1.np").text();
+      var header = $(htmlCurrentPage).find("h1.np").text();
       header = header.replace(new RegExp("Test",'g'),"");
       header = header.trim();
       //arr answers
@@ -26,15 +26,15 @@ function onWindowLoad() {
         }
       };
 
-      if(header != '' && $(my_var).find("#questionForm pre").first().text() != '') {
+      if(header != '' && $(htmlCurrentPage).find("#questionForm pre").first().text() != '') {
 
         //get question
-        req.questionData.question = $(my_var).find("#questionForm pre").first().text();
+        req.questionData.question = $(htmlCurrentPage).find("#questionForm pre").first().text();
         // set to html text question
         $("#question").text(req.questionData.question);
         //get multiselect
-        req.questionData.multiselect = $(my_var).find("#questionForm p.oGood").text();
-        $(my_var).find("pre.np").each(function (key, value) {
+        req.questionData.multiselect = $(htmlCurrentPage).find("#questionForm p.oGood").text();
+        $(htmlCurrentPage).find("pre.np").each(function (key, value) {
           ///fill arr
           arr.push($(value).text());
         });
@@ -64,9 +64,7 @@ function onWindowLoad() {
             } else if (data.version == "new") {
               if (data.answers.length == 0) {
                 // Has not answer(s)
-                $('h2.hide').removeClass('hide');
-                $('h3.hide').removeClass('hide');
-                $('h4.hide').removeClass('hide');
+                $('h2.hide, h3.hide, h4.hide').removeClass('hide');  
               } else {
                 // Right Answer(s)
                 $.each( data.answers, function( key, value ) {
