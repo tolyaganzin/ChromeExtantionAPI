@@ -9,6 +9,10 @@ Face It chrome extention
 - [x] click on: "Download unpakege extention"
 - [x] set pas to folder "toDoPizdato"
 
+###Settings
+
+![picture alt](img/settings.jpg "old")
+
 ##Responses
 Response "old" with image
 
