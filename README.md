@@ -1,5 +1,5 @@
-# toDoPizdato
-Face It chrome extention
+# Chrome extantion API
+Face It chrome extention work with API server
 ###How to use extention? (else ask developer!)
 
 - [x] chrome
