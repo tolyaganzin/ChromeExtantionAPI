@@ -16,13 +16,13 @@ Face It chrome extention
 ##Responses
 Response "old" with image
 
-![picture alt](img/old.jpg "old")
+![picture alt](img/old.jpg "Old")
 
-Response new one (or more) answer
+Response "new one (or more) answer"
 
-![picture alt](img/newOne.jpg "new one")
+![picture alt](img/newOne.jpg "New one")
 
-![picture alt](img/newMulty.jpg "new multy")
+![picture alt](img/newMulty.jpg "New multy")
 
 Response info "Has not answer"
 
