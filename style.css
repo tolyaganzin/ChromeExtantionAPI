@@ -1,6 +1,7 @@
 body {
   min-width: 500px;
 }
+/*style main content*/
 .rightAnswer {
   padding: 10px;
 
@@ -39,11 +40,11 @@ body {
 
   color: gray;
 }
-
+/*hide elements*/
 .hide {
   display: none !important;
 }
-
+/*settings style*/
 .input-form {
   min-width: 80%;
   min-height: 29px;
