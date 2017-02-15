@@ -12,23 +12,22 @@ function onWindowLoad() {
     }
   });
 
-  $('#urlApi').keyup(function(e) {
-    if(e.which == 13) {
-      urlApi = $("#urlApi").val();
-      chrome.storage.local.set({ "urlApi": urlApi }, function(){});
-      alert("Set new url API: " + urlApi);
-      $('#old').addClass('hide');
-      $( "pre.rightAnswer" ).remove();
-      toDoPizdato();
-    }
-});
-  $('#setUrl').click(function(){
+  function settings() {
     urlApi = $("#urlApi").val();
     chrome.storage.local.set({ "urlApi": urlApi }, function(){});
     alert("Set new url API: " + urlApi);
     $('#old').addClass('hide');
     $( "pre.rightAnswer" ).remove();
     toDoPizdato();
+  }
+
+  $('#urlApi').keyup(function(e) {
+    if(e.which == 13) {
+      settings();
+    }
+});
+  $('#setUrl').click(function(){
+    settings();
   });
 
   function toDoPizdato() {
