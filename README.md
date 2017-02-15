@@ -1,4 +1,4 @@
-# Chrome extantion API
+# Chrome extention API
 Face It chrome extention work with API server
 ###How to use extention? (else ask developer!)
 
