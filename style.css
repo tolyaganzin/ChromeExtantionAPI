@@ -76,13 +76,13 @@ body {
 
   background-color: transparent;
 
-  color: gray;
+  color: dodgerblue;
   font-size: medium;
   transition: 1s;
 }
 .btn-form:focus {
   outline:0;
-  color: dodgerblue;
+  color: green;
 }
 .input-form:focus{
   outline:0;
