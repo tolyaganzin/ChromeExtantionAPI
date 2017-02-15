@@ -16,7 +16,7 @@ function onWindowLoad() {
     urlApi = $("#urlApi").val();
     chrome.storage.local.set({ "urlApi": urlApi }, function(){});
     alert("Set new url API: " + urlApi);
-    $('#old').addClass('hide');
+    $('#old, h2.error, h4.info, #question').addClass('hide');
     $( "pre.rightAnswer" ).remove();
     toDoPizdato();
   }

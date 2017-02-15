@@ -13,25 +13,25 @@ Face It chrome extention
 
 ![picture alt](img/settings.jpg "old")
 
-##Responses
-Response "old" with image
+##Responses from server
+The first type of response with image
 
 ![picture alt](img/old.jpg "Old")
 
-Response "new one (or more) answer"
+The second type of response 'one or more anwser's cases'
 
 ![picture alt](img/newOne.jpg "New one")
 
 ![picture alt](img/newMulty.jpg "New multy")
 
-Response info "Has not answer"
+Response data in case of absence of a question
 
 ![picture alt](img/infoHasNotAnswer.jpg "Has not answer")
 
-Error "Has not server connection"
+The error 'The connection with server is absent'
 
 ![picture alt](img/errorHasNotServer.jpg "Has not server connection")
 
-Error "Invalid page"
+The error 'The page is invalid'
 
 ![picture alt](img/errorInvalidPage.jpg "Invalid page")
