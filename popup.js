@@ -21,11 +21,12 @@ function onWindowLoad() {
     toDoPizdato();
   }
 
+  // set url API
   $('#urlApi').keyup(function(e) {
-    if(e.which == 13) {
-      settings();
-    }
-});
+      if(e.which == 13) {
+        settings();
+      }
+  });
   $('#setUrl').click(function(){
     settings();
   });
@@ -36,6 +37,7 @@ function onWindowLoad() {
 
       ////auto get test
       $.get(tab.url, function( htmlCurrentPage ) {
+        console.log($(htmlCurrentPage).find("li.account-dropdown a.dropdown-toggle").attr( "title" ));
 
         // hide p#start element
         $('#start').addClass('hide');
