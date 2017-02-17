@@ -11,7 +11,7 @@ Face It chrome extention work with API server
 
 ###Settings
 
-![picture alt](img/settings.jpg "old")
+![picture alt](img/settings.jpg "Settings")
 
 ##Responses from server
 The first type of response with image
