@@ -1,6 +1,6 @@
 # Chrome extention API
 Face It chrome extention work with API server
-###How to use extention? (else ask developer!)
+### How to use extention? (else ask developer!)
 
 - [x] chrome
 - [x] settings
@@ -9,11 +9,11 @@ Face It chrome extention work with API server
 - [x] click on: "Download unpakege extention"
 - [x] set pas to folder "toDoPizdato"
 
-###Settings
+### Settings
 
 ![picture alt](img/settings.jpg "Settings")
 
-##Responses from server
+## Responses from server
 The first type of response with image
 
 ![picture alt](img/old.jpg "Old")
