@@ -1,6 +1,6 @@
 function onWindowLoad() {
 
-  var urlApi = 'http://192.168.0.145:5000/api/v2/testing';
+  var urlApi = 'http://192.168.0.118:5000/api/testing';
 
   chrome.storage.local.get(["urlApi"], function(items){
     console.log(items);
@@ -37,7 +37,7 @@ function onWindowLoad() {
 
       ////auto get test
       $.get(tab.url, function( htmlCurrentPage ) {
-        console.log($(htmlCurrentPage).find("li.account-dropdown a.dropdown-toggle").attr( "title" ));
+        // console.log($(htmlCurrentPage).find("li.account-dropdown a.dropdown-toggle").attr( "title" ));
 
         // hide p#start element
         $('#start').addClass('hide');
@@ -62,6 +62,19 @@ function onWindowLoad() {
 
           //get question
           req.questionData.question = $(htmlCurrentPage).find("#questionForm pre").first().text();
+          let question = req.questionData.question;
+
+          if (question.indexOf("\n") === -1) {
+            pos = question.length - 5;
+          } else {
+            pos = question.indexOf("\n") - 5;
+          }
+          
+          question = question.substr(0, pos);
+
+          $("#copyToBtn").attr('data-clipboard-text', question);
+          new Clipboard("#copyToBtn");
+
           // set to html text question
           $("#question").text(req.questionData.question);
           //get multiselect
@@ -75,7 +88,7 @@ function onWindowLoad() {
 
           //convert to JSON
           req = JSON.stringify(req);
-          console.log(req);
+          // console.log(req);
 
           //send to server data
           $.ajax({
@@ -86,9 +99,6 @@ function onWindowLoad() {
             url: urlApi,
             data: req,
             success: function (data, textStatus, jqXHR) {
-              //response from server success
-              console.log(textStatus);
-              console.log(data);
               if(data.version == "old") {
                 // Old answer image
                 $('#old').attr("src", data.image);
@@ -115,7 +125,7 @@ function onWindowLoad() {
             error: function (jqXHR, textStatus, errorThrown) {
               // Has not server connection
               $('#start').removeClass("hide").addClass("error").text('Has not server connection');
-              console.log(textStatus);
+              // console.log(textStatus);
             },
             contentType: "application/json",
             dataType: 'json',
