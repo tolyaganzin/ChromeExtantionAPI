@@ -1,6 +1,6 @@
 function onWindowLoad() {
 
-  var urlApi = 'http://192.168.0.145:5000/api/testing';
+  var urlApi = 'http://192.168.0.118:5000/api/testing';
 
   chrome.storage.local.get(["urlApi"], function(items){
     console.log(items);
