@@ -94,3 +94,8 @@ body {
 
   border-style: solid;
 }
+
+#copyToBtn {
+  width: 100%;
+  text-align: center;
+}
