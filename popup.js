@@ -3,7 +3,6 @@ function onWindowLoad() {
   var urlApi = 'http://192.168.0.118:5000/api/testing';
 
   chrome.storage.local.get(["urlApi"], function(items){
-    console.log(items);
     if (items.urlApi) {
       urlApi = items.urlApi;
       $("#urlApi").val(urlApi);
@@ -37,7 +36,6 @@ function onWindowLoad() {
 
       ////auto get test
       $.get(tab.url, function( htmlCurrentPage ) {
-        // console.log($(htmlCurrentPage).find("li.account-dropdown a.dropdown-toggle").attr( "title" ));
 
         // hide p#start element
         $('#start').addClass('hide');
@@ -62,17 +60,8 @@ function onWindowLoad() {
 
           //get question
           req.questionData.question = $(htmlCurrentPage).find("#questionForm pre").first().text();
-          let question = req.questionData.question;
 
-          if (question.indexOf("\n") === -1) {
-            pos = question.length - 5;
-          } else {
-            pos = question.indexOf("\n") - 5;
-          }
-          
-          question = question.substr(0, pos);
-
-          $("#copyToBtn").attr('data-clipboard-text', question);
+          $("#copyToBtn").attr('data-clipboard-text', req.questionData.question);
           new Clipboard("#copyToBtn");
 
           // set to html text question
@@ -88,7 +77,6 @@ function onWindowLoad() {
 
           //convert to JSON
           req = JSON.stringify(req);
-          // console.log(req);
 
           //send to server data
           $.ajax({
