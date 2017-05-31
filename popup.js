@@ -60,7 +60,7 @@ function onWindowLoad() {
 
           //get question
           req.questionData.question = $(htmlCurrentPage).find("#questionForm pre").first().text();
-          
+
           $("#copyToBtn").attr('data-clipboard-text', req.questionData.question);
           new Clipboard("#copyToBtn");
 
