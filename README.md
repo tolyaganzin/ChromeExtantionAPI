@@ -7,7 +7,7 @@ Face It chrome extention work with API server
 - [x] extentions
 - [x] check developer mode
 - [x] click on: "Download unpakege extention"
-- [x] set pas to folder "toDoPizdato"
+- [x] set pas to folder "ChromeExtentionAPI"
 
 ### Settings
 
